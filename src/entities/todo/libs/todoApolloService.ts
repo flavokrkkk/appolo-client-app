@@ -13,6 +13,29 @@ class TodoApolloService {
       }
     `;
   }
+
+  public createTodo() {
+    return gql`
+      mutation AddTask(
+        $title: String!
+        $userId: String!
+        $isDone: Boolean!
+        $createdAt: Int!
+      ) {
+        createTask(
+          title: $title
+          userId: $userId
+          isDone: $isDone
+          createdAt: $createdAt
+        ) {
+          id
+          title
+          isDone
+          userId
+        }
+      }
+    `;
+  }
 }
 
-export const { getAllTodo } = new TodoApolloService();
+export const { getAllTodo, createTodo } = new TodoApolloService();

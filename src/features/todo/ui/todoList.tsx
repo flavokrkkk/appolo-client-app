@@ -2,7 +2,7 @@ import { FC } from "react";
 import TaskCard from "./todoCard";
 
 interface ITaskList {
-  tasksPromise:
+  tasks:
     | ({
         __typename?: "Task";
         id: string;
@@ -14,8 +14,7 @@ interface ITaskList {
     | undefined;
 }
 
-const TaskList: FC<ITaskList> = ({ tasksPromise }) => {
-  const tasks = tasksPromise;
+const TaskList: FC<ITaskList> = ({ tasks }) => {
   return (
     <section className="flex flex-col space-y-2">
       {tasks?.map((task) => (

@@ -1,9 +1,12 @@
 import { memo } from "react";
+import { useCreateTodo } from "../hooks/useCreateTodo";
 
 const TaskForm = memo(() => {
+  const { handleSubmit } = useCreateTodo();
+
   return (
     <section>
-      <form className="flex flex-col space-y-2">
+      <form className="flex flex-col space-y-2" onSubmit={handleSubmit}>
         <input
           name="title"
           placeholder="Введите название.."
