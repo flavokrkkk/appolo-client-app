@@ -1,13 +1,30 @@
 import { useMutation } from "@apollo/client";
-import { createTodo } from "../../../entities/todo/libs/todoApolloService";
+import {
+  createTodo,
+  getAllTodo,
+} from "../../../entities/todo/libs/todoApolloService";
 import { FormEvent } from "react";
-import { useTodos } from "./useTodos";
+import { AllTodosQuery } from "../../../shared/libs/types/graphql/generated";
 
 export const useCreateTodo = () => {
-  const { refetch } = useTodos();
   const [createTask, { loading, error }] = useMutation(createTodo(), {
-    onCompleted: () => {
-      refetch();
+    update: (cache, { data: { createTask } }) => {
+      const result = cache.readQuery<{
+        todos: Array<AllTodosQuery> | null;
+      }>({ query: getAllTodo() });
+
+      if (result && result.todos) {
+        const todos = result.todos;
+
+        cache.writeQuery({
+          query: getAllTodo(),
+          data: {
+            todos: [createTask, ...todos],
+          },
+        });
+      } else {
+        console.log("No todos found");
+      }
     },
   });
 

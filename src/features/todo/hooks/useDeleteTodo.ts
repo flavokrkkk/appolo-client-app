@@ -1,13 +1,12 @@
 import { useMutation } from "@apollo/client";
-import { deleteTodo } from "../../../entities/todo/libs/todoApolloService";
-import { useTodos } from "./useTodos";
+import {
+  deleteTodo,
+  getAllTodo,
+} from "../../../entities/todo/libs/todoApolloService";
 
 export const useDeleteTodo = () => {
-  const { refetch } = useTodos();
   const [mutation, { loading, error }] = useMutation(deleteTodo(), {
-    onCompleted: () => {
-      refetch();
-    },
+    refetchQueries: [{ query: getAllTodo() }],
   });
 
   const handleDeleteTodo = (event: React.MouseEvent<HTMLButtonElement>) => {
