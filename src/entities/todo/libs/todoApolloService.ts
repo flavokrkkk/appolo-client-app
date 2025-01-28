@@ -46,6 +46,20 @@ class TodoApolloService {
       }
     `;
   }
+
+  public updateTodo() {
+    return gql`
+      mutation UpdateTask($id: ID!, $isDone: Boolean) {
+        updateTask(id: $id, isDone: $isDone) {
+          id
+          title
+          isDone
+          userId
+        }
+      }
+    `;
+  }
 }
 
-export const { getAllTodo, createTodo, deleteTodo } = new TodoApolloService();
+export const { getAllTodo, createTodo, deleteTodo, updateTodo } =
+  new TodoApolloService();

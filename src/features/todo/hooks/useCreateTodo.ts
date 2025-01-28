@@ -23,7 +23,7 @@ export const useCreateTodo = () => {
           },
         });
       } else {
-        console.log("No todos found");
+        throw new Error("Not found Todos");
       }
     },
   });
